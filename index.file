@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ONE BITE - Change The Taste</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:Arial;background:#000;color:#fff;}
+.header{text-align:center;padding:20px;}
+h1{color:orange;}
+h2{color:#ffcc00;margin-top:25px;}
+.section{padding:15px;}
+.item{
+  background:#111;
+  padding:10px;
+  margin:6px 0;
+  border-radius:6px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+button{
+  background:orange;
+  border:none;
+  padding:5px 10px;
+  border-radius:5px;
+  font-weight:bold;
+}
+.cartbar{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:orange;
+  color:#000;
+  padding:12px;
+  text-align:center;
+  font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>ONE BITE</h1>
+<p>Change The Taste</p>
+</div>
+
+<div class="section" id="menu"></div>
+
+<div class="cartbar" onclick="placeOrder()">
+🛒 Total: ₹<span id="total">0</span> | Place Order
+</div>
+
+<script>
+let total = 0;
+let orderList = [];
+
+const items = [
+["Veg Burger",69],["Chicken Burger",79],["Aloo Tikki Burger",59],["One Bite Special Burger",130],
+["Veg Sandwich",59],["Corn Sandwich",79],["Chicken Sandwich",99],
+["Veg Pizza",130],["Corn Cheese Pizza",120],["Chicken Pizza",169],["One Bite Special Pizza",199],
+["Veg Nuggets (6pcs)",89],["Chicken Nuggets (6pcs)",99],["Veg Momo (5pcs)",79],["Chicken Momo (5pcs)",89],
+["Masala Sweetcorn",89],["French Fries Half",69],["French Fries Full",119],
+["Aloo Tikki (4pcs)",99],["Chicken Wings (4pcs)",169],["Fish Finger (4pcs)",159],
+["Chili Chicken Dry",159],["Chili Chicken Gravy",169],
+["Basanti Pulao + Chicken Kosha Combo",139],
+["Basanti Pulao + Aloo Dum Combo",129],
+["Steamed Rice + Chicken Kosha Combo",139],
+["Egg Fried Rice + Chilli Chicken Combo",149],
+["Egg Chicken Fried Rice + Chilli Chicken Combo",179],
+["Egg Noodles + Chilli Chicken Combo",159],
+["Egg Chicken Noodles + Chilli Chicken Combo",179],
+["Plain Maggi",69],["Veg Maggi",89],["Egg Maggi",99],["Chicken Maggi",139],
+["Egg + Chicken Maggi",150],["Egg + Cheese Maggi",130],
+["Egg + Chicken + Cheese Maggi",170],["Fried Egg Maggi",120],
+["Bread Omelette (1 egg)",60],["Bread Omelette (2 egg)",80],
+["Onion Omelette (1 egg)",45],["Onion Omelette (2 egg)",59],
+["Veg Omelette (1 egg)",45],["Cheese Omelette (1 egg)",80],
+["Boiled Eggs (2)",50],
+["Aloo Dum (4pcs)",79],["Chicken Kosha (4pcs)",159],
+["Chicken Butter Masala (4pcs)",179],
+["Veg Hakka Noodles",69],["Egg Hakka Noodles",89],["Mix Hakka Noodles",129],
+["Veg Fried Rice",79],["Egg Fried Rice",109],
+["Egg Chicken Fried Rice",139],
+["Red Tea",30],["Milk Tea",35],["One Bite Special Tea",55],
+["Steam Rice",89],["Basanti Pulao",99]
+];
+
+const menuDiv = document.getElementById("menu");
+
+items.forEach(item=>{
+  let div = document.createElement("div");
+  div.className="item";
+  div.innerHTML = `
+    <span>${item[0]} - ₹${item[1]}</span>
+    <button onclick="addToCart('${item[0]}',${item[1]})">Add</button>
+  `;
+  menuDiv.appendChild(div);
+});
+
+function addToCart(name,price){
+  total += price;
+  orderList.push(name + " - ₹" + price);
+  document.getElementById("total").innerText = total;
+}
+
+function placeOrder(){
+  if(total==0){alert("Cart is empty"); return;}
+  let message = "Order from ONE BITE:%0A%0A";
+  orderList.forEach(item=>{ message += item + "%0A"; });
+  message += "%0ATotal: ₹" + total;
+  window.open("https://wa.me/917003355253?text=" + message);
+}
+</script>
+
+</body>
+</html>
