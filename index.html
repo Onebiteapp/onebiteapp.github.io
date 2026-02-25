@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ONE BITE - Change The Taste</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:Arial;background:#000;color:#fff;}
+.header{text-align:center;padding:20px;}
+h1{color:orange;}
+.section{padding:15px;}
+.item{
+  background:#111;
+  padding:10px;
+  margin:6px 0;
+  border-radius:6px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+button{
+  background:orange;
+  border:none;
+  padding:5px 10px;
+  border-radius:5px;
+  font-weight:bold;
+}
+input, textarea{
+  width:100%;
+  padding:8px;
+  margin:5px 0;
+  border-radius:5px;
+  border:none;
+}
+.cartbox{
+  background:#111;
+  padding:15px;
+  margin:15px;
+  border-radius:8px;
+}
+.cartbar{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:orange;
+  color:#000;
+  padding:12px;
+  text-align:center;
+  font-weight:bold;
+}
+.clearbtn{
+  background:red;
+  color:white;
+  margin-top:10px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>ONE BITE</h1>
+<p>Change The Taste</p>
+</div>
+
+<div class="section" id="menu"></div>
+
+<div class="cartbox">
+<h3>Customer Details</h3>
+<input type="text" id="custName" placeholder="Your Name">
+<input type="text" id="custPhone" placeholder="Mobile Number">
+<textarea id="custAddress" placeholder="Delivery Address"></textarea>
+<button class="clearbtn" onclick="clearCart()">Clear Cart</button>
+</div>
+
+<div class="cartbar" onclick="placeOrder()">
+🛒 Total: ₹<span id="total">0</span> | Place Order
+</div>
+
+<script>
+let total = 0;
+let orderList = [];
+
+const items = [
+["Veg Burger",69],["Chicken Burger",79],["Aloo Tikki Burger",59],
+["Chicken Sandwich",99],["Chicken Pizza",169],
+["French Fries Full",119],["Chicken Wings",169],
+["Egg Fried Rice",109],["Chicken Kosha",159],
+["Chicken Butter Masala",179],
+["Plain Maggi",69],["Egg Maggi",99],
+["Red Tea",30],["Milk Tea",35]
+];
+
+const menuDiv = document.getElementById("menu");
+
+items.forEach(item=>{
+  let div = document.createElement("div");
+  div.className="item";
+  div.innerHTML = `
+    <span>${item[0]} - ₹${item[1]}</span>
+    <button onclick="addToCart('${item[0]}',${item[1]})">Add</button>
+  `;
+  menuDiv.appendChild(div);
+});
+
+function addToCart(name,price){
+  total += price;
+  orderList.push(name + " - ₹" + price);
+  document.getElementById("total").innerText = total;
+}
+
+function clearCart(){
+  total = 0;
+  orderList = [];
+  document.getElementById("total").innerText = 0;
+  alert("Cart Cleared");
+}
+
+function placeOrder(){
+  if(total==0){alert("Cart is empty"); return;}
+
+  let name = document.getElementById("custName").value;
+  let phone = document.getElementById("custPhone").value;
+  let address = document.getElementById("custAddress").value;
+
+  if(name=="" || phone=="" || address==""){
+    alert("Please fill customer details");
+    return;
+  }
+
+  let message = "Order from ONE BITE:%0A%0A";
+  message += "Name: " + name + "%0A";
+  message += "Phone: " + phone + "%0A";
+  message += "Address: " + address + "%0A%0A";
+
+  orderList.forEach(item=>{ message += item + "%0A"; });
+  message += "%0ATotal: ₹" + total;
+
+  window.open("https://wa.me/917003355253?text=" + message);
+}
+</script>
+
+</body>
+</html>
