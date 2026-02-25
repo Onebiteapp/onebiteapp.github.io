@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ONE BITE - Chandannagar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+
+<style>
+body{margin:0;font-family:Arial;background:#000;color:#fff}
+.header{text-align:center;padding:20px}
+h1{color:orange}
+.category{background:#111;margin:10px;padding:10px}
+.item{display:flex;justify-content:space-between;padding:5px 0}
+button{background:orange;border:none;padding:5px 8px}
+.cartbox{background:#111;padding:15px;margin:10px}
+input,textarea,select{width:100%;padding:8px;margin:5px 0}
+.placebtn{background:red;width:100%;padding:10px;font-size:16px}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>ONE BITE</h1>
+<p>Chandannagar</p>
+</div>
+
+<div id="menu"></div>
+
+<div class="cartbox">
+
+<h3>Delivery Area</h3>
+<select id="deliveryArea" onchange="updateDelivery()">
+<option value="0">Within 2 KM (Free)</option>
+<option value="20">More Than 2 KM (+₹20)</option>
+</select>
+
+<h3>Customer Details</h3>
+<input type="text" id="custName" placeholder="Your Name">
+<input type="text" id="custPhone" placeholder="Phone Number">
+<textarea id="custAddress" placeholder="Full Address"></textarea>
+
+<h3>Payment Method</h3>
+<select id="paymentMethod">
+<option value="">Select Payment</option>
+<option value="Cash on Delivery">Cash on Delivery</option>
+<option value="UPI Payment">UPI Payment</option>
+</select>
+
+<h3>Total: ₹<span id="total">0</span></h3>
+
+<button class="placebtn" onclick="placeOrder()">Place Order</button>
+
+</div>
+
+<script>
+
+let menuData = {};
+let cart = {};
+let deliveryCharge = 0;
+
+function updateDelivery(){
+deliveryCharge = parseInt(document.getElementById("deliveryArea").value);
+updateTotal();
+}
+
+function updateTotal(){
+let total=0;
+for(let item in cart){
+total+=cart[item].price*cart[item].qty;
+}
+document.getElementById("total").innerText = total + deliveryCharge;
+}
+
+function addItem(name,price){
+if(!cart[name]) cart[name]={price:price,qty:0};
+cart[name].qty++;
+updateTotal();
+}
+
+function removeItem(name){
+if(cart[name]){
+cart[name].qty--;
+if(cart[name].qty<=0) delete cart[name];
+}
+updateTotal();
+}
+
+function placeOrder(){
+
+if(Object.keys(cart).length===0){
+alert("Cart empty");
+return;
+}
+
+let name=document.getElementById("custName").value;
+let phone=document.getElementById("custPhone").value;
+let address=document.getElementById("custAddress").value;
+let payment=document.getElementById("paymentMethod").value;
+
+if(name==""||phone==""||address==""||payment==""){
+alert("Fill all details");
+return;
+}
+
+let orderID = "OB" + Math.floor(Math.random()*10000);
+
+let total = document.getElementById("total").innerText;
+
+let message="*ONE BITE ORDER*%0A";
+message+="Order ID: "+orderID+"%0A%0A";
+message+="Name: "+name+"%0A";
+message+="Phone: "+phone+"%0A";
+message+="Address: "+address+"%0A";
+message+="Payment: "+payment+"%0A%0A";
+
+for(let item in cart){
+message+=item+" x "+cart[item].qty+"%0A";
+}
+
+message+="%0ADelivery: ₹"+deliveryCharge+"%0A";
+message+="Total: ₹"+total;
+
+window.open("https://wa.me/917003355253?text="+message);
+
+alert("Order Sent!");
+
+cart={};
+updateTotal();
+}
+
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('service-worker.js');
+}
+
+</script>
+
+</body>
+</html>
