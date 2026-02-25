@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ONE BITE - Change The Taste</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:Arial;background:black;color:white;}
+.header{text-align:center;padding:20px;}
+h1{color:orange;font-size:38px;}
+h2{margin-top:25px;color:#ffcc00;}
+.section{padding:15px;}
+.item{background:#111;padding:12px;margin:8px 0;border-radius:8px;display:flex;justify-content:space-between;}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>ONE BITE</h1>
+<p>Change The Taste</p>
+<p>Borodighir Dhar, Chandannagar</p>
+</div>
+
+<div class="section">
+
+<h2>🍔 Burger</h2>
+<div class="item"><span>Veg Burger</span><span>₹69</span></div>
+<div class="item"><span>Chicken Burger</span><span>₹79</span></div>
+<div class="item"><span>Aloo Tikki Burger</span><span>₹59</span></div>
+<div class="item"><span>One Bite Special Burger</span><span>₹130</span></div>
+
+<h2>🥪 Sandwich</h2>
+<div class="item"><span>Veg Sandwich</span><span>₹59</span></div>
+<div class="item"><span>Corn Sandwich</span><span>₹79</span></div>
+<div class="item"><span>Chicken Sandwich</span><span>₹99</span></div>
+
+<h2>🍕 Pizza</h2>
+<div class="item"><span>Veg Pizza</span><span>₹130</span></div>
+<div class="item"><span>Corn Cheese Pizza</span><span>₹120</span></div>
+<div class="item"><span>Chicken Pizza</span><span>₹169</span></div>
+<div class="item"><span>One Bite Special Pizza</span><span>₹199</span></div>
+
+<h2>🍟 Snacks</h2>
+<div class="item"><span>Veg Nuggets (6pcs)</span><span>₹89</span></div>
+<div class="item"><span>Chicken Nuggets (6pcs)</span><span>₹99</span></div>
+<div class="item"><span>Veg Momo (5pcs)</span><span>₹79</span></div>
+<div class="item"><span>Chicken Momo (5pcs)</span><span>₹89</span></div>
+<div class="item"><span>Masala Sweetcorn (100g)</span><span>₹89</span></div>
+<div class="item"><span>French Fries (Half)</span><span>₹69</span></div>
+<div class="item"><span>French Fries (Full)</span><span>₹119</span></div>
+<div class="item"><span>Aloo Tikki (4pcs)</span><span>₹99</span></div>
+<div class="item"><span>Chicken Wings (4pcs)</span><span>₹169</span></div>
+<div class="item"><span>Fish Finger (4pcs)</span><span>₹159</span></div>
+<div class="item"><span>Chili Chicken Dry (6pcs)</span><span>₹159</span></div>
+<div class="item"><span>Chili Chicken Gravy (6pcs)</span><span>₹169</span></div>
+
+<h2>🍱 Combos / Thali</h2>
+<div class="item"><span>Basanti Pulao (750ml) + Chicken Kosha (2pcs) + Soft Beverage</span><span>₹139</span></div>
+<div class="item"><span>Basanti Pulao (750ml) + Aloo Dum (3pcs) + Soft Beverage</span><span>₹129</span></div>
+<div class="item"><span>Steamed Rice (750ml) + Chicken Kosha (2pcs) + Soft Beverage</span><span>₹139</span></div>
+
+<h2>🍜 Chinese Combos</h2>
+<div class="item"><span>Egg Fried Rice + Chilli Chicken (4pcs) + Soft Beverage</span><span>₹149</span></div>
+<div class="item"><span>Egg Chicken Fried Rice + Chilli Chicken (4pcs) + Soft Beverage</span><span>₹179</span></div>
+<div class="item"><span>Egg Noodles + Chilli Chicken (4pcs) + Soft Beverage</span><span>₹159</span></div>
+<div class="item"><span>Egg Chicken Noodles + Chilli Chicken (4pcs) + Soft Beverage</span><span>₹179</span></div>
+
+<h2>🍜 Maggi</h2>
+<div class="item"><span>Plain Maggi</span><span>₹69</span></div>
+<div class="item"><span>Veg Maggi</span><span>₹89</span></div>
+<div class="item"><span>Egg Maggi</span><span>₹99</span></div>
+<div class="item"><span>Chicken Maggi</span><span>₹139</span></div>
+<div class="item"><span>Egg + Chicken Maggi</span><span>₹150</span></div>
+<div class="item"><span>Egg + Cheese Maggi</span><span>₹130</span></div>
+<div class="item"><span>Egg + Chicken + Cheese Maggi</span><span>₹170</span></div>
+<div class="item"><span>Fried Egg Maggi</span><span>₹120</span></div>
+
+<h2>🍳 Omelette</h2>
+<div class="item"><span>Bread Omelette (1 egg)</span><span>₹60</span></div>
+<div class="item"><span>Bread Omelette (2 eggs)</span><span>₹80</span></div>
+<div class="item"><span>Onion Omelette (1 egg)</span><span>₹45</span></div>
+<div class="item"><span>Onion Omelette (2 eggs)</span><span>₹59</span></div>
+<div class="item"><span>Veg Omelette (1 egg)</span><span>₹45</span></div>
+<div class="item"><span>Cheese Omelette (1 egg)</span><span>₹80</span></div>
+<div class="item"><span>Boiled Eggs (2)</span><span>₹50</span></div>
+
+<h2>🍗 Main Course</h2>
+<div class="item"><span>Aloo Dum (4pcs)</span><span>₹79</span></div>
+<div class="item"><span>Chicken Kosha (4pcs)</span><span>₹159</span></div>
+<div class="item"><span>Chicken Butter Masala (4pcs)</span><span>₹179</span></div>
+
+<h2>🍜 Fried Rice / Noodles</h2>
+<div class="item"><span>Veg Hakka Noodles</span><span>₹69</span></div>
+<div class="item"><span>Egg Hakka Noodles</span><span>₹89</span></div>
+<div class="item"><span>Mix Hakka Noodles</span><span>₹129</span></div>
+<div class="item"><span>Veg Fried Rice</span><span>₹79</span></div>
+<div class="item"><span>Egg Fried Rice</span><span>₹109</span></div>
+<div class="item"><span>Egg Chicken Fried Rice</span><span>₹139</span></div>
+
+<h2>🍵 Tea</h2>
+<div class="item"><span>Red Tea</span><span>₹30</span></div>
+<div class="item"><span>Milk Tea</span><span>₹35</span></div>
+<div class="item"><span>One Bite Special Tea</span><span>₹55</span></div>
+
+<h2>🍚 Rice</h2>
+<div class="item"><span>Steam Rice</span><span>₹89</span></div>
+<div class="item"><span>Basanti Pulao</span><span>₹99</span></div>
+
+</div>
+</body>
+</html>
