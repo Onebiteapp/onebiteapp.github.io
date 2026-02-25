@@ -23,7 +23,7 @@ input,textarea{width:100%;padding:8px;}
 
 </head>
 <body>
-
+  
 <div class="header">
 <h1>ONE BITE</h1>
 <p>Change The Taste</p>
@@ -125,6 +125,10 @@ message+="%0ATotal: ₹"+total;
 window.open("https://wa.me/917003355253?text="+message);
 }
 </script>
-
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
+</script>
 </body>
 </html>
