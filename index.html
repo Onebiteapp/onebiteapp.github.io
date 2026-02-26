@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ONE BITE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:Arial;background:#000;color:#fff;padding:10px}
+h1{color:orange;text-align:center}
+.item{background:#111;padding:10px;margin:5px 0}
+button{background:orange;border:none;padding:6px}
+input,select{width:100%;padding:8px;margin:5px 0}
+.total{font-size:18px;margin-top:10px}
+</style>
+</head>
+<body>
+
+<h1>ONE BITE</h1>
+
+<div class="item">
+Veg Burger - ₹69
+<button onclick="add(69)">Add</button>
+</div>
+
+<div class="item">
+Chicken Burger - ₹79
+<button onclick="add(79)">Add</button>
+</div>
+
+<div class="item">
+Veg Pizza - ₹130
+<button onclick="add(130)">Add</button>
+</div>
+
+<h3>Distance</h3>
+<select id="distance" onchange="calc()">
+<option value="0">Within 2KM (Free)</option>
+<option value="20">More than 2KM (+₹20)</option>
+</select>
+
+<h3>Details</h3>
+<input type="text" id="name" placeholder="Name">
+<input type="text" id="phone" placeholder="Phone">
+<input type="text" id="address" placeholder="Address">
+
+<h3>Payment</h3>
+<select id="payment">
+<option value="">Select</option>
+<option>Cash on Delivery</option>
+<option>UPI</option>
+</select>
+
+<div class="total">
+Total ₹<span id="total">0</span>
+</div>
+
+<button onclick="order()" style="width:100%;padding:10px;background:green;color:white">
+SEND ORDER
+</button>
+
+<script>
+let total=0;
+
+function add(price){
+total+=price;
+calc();
+}
+
+function calc(){
+let delivery=parseInt(document.getElementById("distance").value);
+document.getElementById("total").innerText=total+delivery;
+}
+
+function order(){
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let address=document.getElementById("address").value;
+let payment=document.getElementById("payment").value;
+
+if(name==""||phone==""||address==""||payment==""){
+alert("Fill all details");
+return;
+}
+
+let message="Order from ONE BITE%0A";
+message+="Name: "+name+"%0A";
+message+="Phone: "+phone+"%0A";
+message+="Address: "+address+"%0A";
+message+="Payment: "+payment+"%0A";
+message+="Total: ₹"+document.getElementById("total").innerText;
+
+window.open("https://wa.me/917003355253?text="+message);
+}
+</script>
+
+</body>
+</html>
