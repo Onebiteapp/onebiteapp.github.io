@@ -1,2 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>One Bite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#FFD700">
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>🍔 One Bite</h1>
+
+<div class="menu">
+  <h2>Veg Burger - ₹69</h2>
+  <button onclick="addToCart(69)">Add</button>
+</div>
+
+<div class="menu">
+  <h2>Chicken Burger - ₹79</h2>
+  <button onclick="addToCart(79)">Add</button>
+</div>
+
+<h2>Total: ₹<span id="total">0</span></h2>
+
+<button onclick="placeOrder()">Place Order</button>
+
+<script src="script.js"></script>
+</body>
+</html>
