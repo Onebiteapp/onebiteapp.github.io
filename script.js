@@ -1,13 +1,13 @@
 let total = 0;
 let delivery = 0;
+let cart = [];
 
-// 🔥 আপনার Kitchen Location (Chandannagar)
-// এখানে আপনার Google Maps থেকে নেওয়া latitude & longitude বসাতে হবে
-const kitchenLat = 22.8665;  
-const kitchenLng = 88.3672;  
+const kitchenLat = 22.8665;
+const kitchenLng = 88.3672;
 
-function addToCart(price){
+function addToCart(price, itemName){
   total += price;
+  cart.push(itemName + " - ₹" + price);
   document.getElementById("total").innerText = total;
   updateFinal();
 }
@@ -18,7 +18,7 @@ function updateFinal(){
 }
 
 function calculateDistance(userLat, userLng){
-  const R = 6371; // km
+  const R = 6371;
   const dLat = (userLat - kitchenLat) * Math.PI / 180;
   const dLng = (userLng - kitchenLng) * Math.PI / 180;
   const a =
@@ -33,43 +33,51 @@ function calculateDistance(userLat, userLng){
 
 function placeOrder(){
 
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(function(position){
+  if(cart.length === 0){
+    alert("Please add items first!");
+    return;
+  }
 
-      let userLat = position.coords.latitude;
-      let userLng = position.coords.longitude;
+  navigator.geolocation.getCurrentPosition(function(position){
 
-      let distance = calculateDistance(userLat, userLng);
+    let userLat = position.coords.latitude;
+    let userLng = position.coords.longitude;
 
-      if(distance > 2){
-        delivery = 20;
-      } else {
-        delivery = 0;
-      }
+    let distance = calculateDistance(userLat, userLng);
 
-      updateFinal();
+    if(distance > 2){
+      delivery = 20;
+    } else {
+      delivery = 0;
+    }
 
-      let name = document.getElementById("name").value;
-      let phone = document.getElementById("phone").value;
-      let address = document.getElementById("address").value;
-      let payment = document.getElementById("payment").value;
+    updateFinal();
 
-      let finalAmount = total + delivery;
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let address = document.getElementById("address").value;
+    let payment = document.getElementById("payment").value;
 
-      let message = `New Order - One Bite
+    let finalAmount = total + delivery;
+
+    let itemsList = cart.join("\n");
+
+    let message = `New Order - One Bite
+
 Name: ${name}
 Phone: ${phone}
 Address: ${address}
+
+Items:
+${itemsList}
+
 Distance: ${distance.toFixed(2)} km
 Delivery: ₹${delivery}
 Total: ₹${finalAmount}
 Payment: ${payment}`;
 
-      let whatsappURL = `https://wa.me/917003355253?text=${encodeURIComponent(message)}`;
-      window.open(whatsappURL, "_blank");
+    let whatsappURL = `https://wa.me/917003355253?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, "_blank");
 
-    });
-  } else {
-    alert("Location not supported");
-  }
+  });
 }
