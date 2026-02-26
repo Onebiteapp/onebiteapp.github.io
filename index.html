@@ -81,12 +81,18 @@ alert("Fill all details");
 return;
 }
 
-let message="Order from ONE BITE%0A";
+let message="Order from ONE BITE%0A%0A";
 message+="Name: "+name+"%0A";
 message+="Phone: "+phone+"%0A";
 message+="Address: "+address+"%0A";
-message+="Payment: "+payment+"%0A";
-message+="Total: ₹"+document.getElementById("total").innerText;
+message+="Payment: "+payment+"%0A%0A";
+message+="Items:%0A";
+
+for(let item in cart){
+message+= item + " x" + cart[item].qty + "%0A";
+}
+
+message+="%0ATotal: ₹"+document.getElementById("total").innerText;
 
 window.open("https://wa.me/917003355253?text="+message);
 }
