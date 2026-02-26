@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Checkout - One Bite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+  background:#000;
+  color:#FFD700;
+  font-family:sans-serif;
+  text-align:center;
+}
+input,select{
+  padding:8px;
+  margin:8px;
+  width:80%;
+}
+button{
+  background:#FFD700;
+  color:#000;
+  padding:8px 15px;
+  border:none;
+  border-radius:6px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Checkout - One Bite</h2>
+
+<h3>Total: ₹<span id="total">0</span></h3>
+
+<input type="text" id="name" placeholder="Your Name"><br>
+<input type="text" id="phone" placeholder="Phone"><br>
+<input type="text" id="address" placeholder="Address"><br>
+
+<select id="payment">
+<option value="COD">Cash On Delivery</option>
+<option value="POD">Pay Online (UPI)</option>
+</select>
+
+<br><br>
+<button onclick="placeOrder()">Place Order</button>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB63wz4Z8maGyYk7UdvZk2IvxwGXYePisA",
+  authDomain: "onebiteapp-b19c3.firebaseapp.com",
+  projectId: "onebiteapp-b19c3",
+  storageBucket: "onebiteapp-b19c3.firebasestorage.app",
+  messagingSenderId: "925416277184",
+  appId: "1:925416277184:web:0af73016a42be902ea5925",
+  databaseURL: "https://onebiteapp-b19c3-default-rtdb.asia-southeast1.firebasedatabase.app"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+let total = 100; // temporary test value
+document.getElementById("total").innerText = total;
+
+window.placeOrder = function(){
+
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let address = document.getElementById("address").value;
+  let payment = document.getElementById("payment").value;
+
+  if(!name || !phone || !address){
+    alert("Fill all details");
+    return;
+  }
+
+  push(ref(db, "orders"), {
+    name,
+    phone,
+    address,
+    total,
+    payment,
+    time:new Date().toLocaleString()
+  });
+
+  alert("Order Saved to Firebase!");
+
+};
+
+</script>
+
+</body>
+</html>
