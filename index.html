@@ -3,34 +3,82 @@
 <head>
 <title>One Bite</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#FFD700">
-<link rel="stylesheet" href="style.css">
+
+<style>
+body{
+  background:black;
+  color:gold;
+  font-family:sans-serif;
+  text-align:center;
+}
+
+.menu{
+  border:1px solid gold;
+  padding:10px;
+  margin:10px;
+  border-radius:10px;
+}
+
+button{
+  background:gold;
+  color:black;
+  padding:8px 15px;
+  border:none;
+  margin-top:5px;
+  border-radius:5px;
+}
+
+input, select{
+  padding:8px;
+  margin:5px;
+  width:80%;
+}
+</style>
 </head>
 
 <body>
 
 <h1>🍔 One Bite</h1>
+<h3>2km Free Delivery | After 2km ₹20</h3>
+
+<!-- MENU -->
 
 <div class="menu">
-  <h2>Veg Burger - ₹69</h2>
-  <button onclick="addToCart(69)">Add</button>
+  <h3>Veg Burger - ₹69</h3>
+  <button onclick="addToCart(69,'Veg Burger')">Add</button>
 </div>
 
 <div class="menu">
-  <h2>Chicken Burger - ₹79</h2>
-  <button onclick="addToCart(79)">Add</button>
+  <h3>Chicken Burger - ₹79</h3>
+  <button onclick="addToCart(79,'Chicken Burger')">Add</button>
 </div>
 
-<h2>Food Total: ₹<span id="total">0</span></h2>
-<h2>Delivery: ₹<span id="delivery">0</span></h2>
+<div class="menu">
+  <h3>Chicken Pizza - ₹169</h3>
+  <button onclick="addToCart(169,'Chicken Pizza')">Add</button>
+</div>
+
+<div class="menu">
+  <h3>Chicken Wings (4pcs) - ₹169</h3>
+  <button onclick="addToCart(169,'Chicken Wings')">Add</button>
+</div>
+
+<div class="menu">
+  <h3>Egg Chicken Fried Rice - ₹139</h3>
+  <button onclick="addToCart(139,'Egg Chicken Fried Rice')">Add</button>
+</div>
+
+<hr>
+
+<h3>Food Total: ₹<span id="total">0</span></h3>
+<h3>Delivery: ₹<span id="delivery">0</span></h3>
 <h2>Final Total: ₹<span id="final">0</span></h2>
 
-<br>
+<hr>
 
-<input type="text" id="name" placeholder="Your Name"><br><br>
-<input type="text" id="phone" placeholder="Phone Number"><br><br>
-<input type="text" id="address" placeholder="Delivery Address"><br><br>
+<input type="text" id="name" placeholder="Your Name"><br>
+<input type="text" id="phone" placeholder="Phone Number"><br>
+<input type="text" id="address" placeholder="Delivery Address"><br>
 
 <select id="payment">
   <option value="COD">Cash On Delivery</option>
@@ -38,9 +86,93 @@
 </select>
 
 <br><br>
-
 <button onclick="placeOrder()">Place Order</button>
 
-<script src="script.js"></script>
+<script>
+
+let total = 0;
+let delivery = 0;
+let cart = [];
+
+const kitchenLat = 22.8665;
+const kitchenLng = 88.3672;
+
+function addToCart(price,item){
+  total += price;
+  cart.push(item + " - ₹" + price);
+  document.getElementById("total").innerText = total;
+  updateFinal();
+}
+
+function updateFinal(){
+  document.getElementById("delivery").innerText = delivery;
+  document.getElementById("final").innerText = total + delivery;
+}
+
+function calculateDistance(userLat,userLng){
+  const R = 6371;
+  const dLat = (userLat - kitchenLat) * Math.PI/180;
+  const dLng = (userLng - kitchenLng) * Math.PI/180;
+  const a =
+    Math.sin(dLat/2)*Math.sin(dLat/2) +
+    Math.cos(kitchenLat*Math.PI/180) *
+    Math.cos(userLat*Math.PI/180) *
+    Math.sin(dLng/2)*Math.sin(dLng/2);
+  const c = 2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return R*c;
+}
+
+function placeOrder(){
+
+  if(cart.length===0){
+    alert("Add items first!");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(function(position){
+
+    let userLat = position.coords.latitude;
+    let userLng = position.coords.longitude;
+
+    let distance = calculateDistance(userLat,userLng);
+
+    if(distance>2){
+      delivery = 20;
+    } else {
+      delivery = 0;
+    }
+
+    updateFinal();
+
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let address = document.getElementById("address").value;
+    let payment = document.getElementById("payment").value;
+
+    let finalAmount = total + delivery;
+    let itemsList = cart.join("\n");
+
+    let message = `New Order - One Bite
+
+Name: ${name}
+Phone: ${phone}
+Address: ${address}
+
+Items:
+${itemsList}
+
+Distance: ${distance.toFixed(2)} km
+Delivery: ₹${delivery}
+Total: ₹${finalAmount}
+Payment: ${payment}`;
+
+    let whatsappURL = `https://wa.me/917003355253?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL,"_blank");
+
+  });
+}
+
+</script>
+
 </body>
 </html>
