@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>One Bite Cloud Kitchen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial; padding: 15px; background:#f2f2f2; }
+    .item {
+      background:white;
+      padding:10px;
+      margin:10px 0;
+      border-radius:8px;
+      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    }
+    button {
+      padding:8px 12px;
+      background:green;
+      color:white;
+      border:none;
+      border-radius:5px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🍔 One Bite Cloud Kitchen</h2>
+
+<div class="item">
+  <h4>Chicken Biryani</h4>
+  <p>₹160</p>
+  <button onclick="order('Chicken Biryani - ₹160')">Order</button>
+</div>
+
+<div class="item">
+  <h4>Burger</h4>
+  <p>₹80</p>
+  <button onclick="order('Burger - ₹80')">Order</button>
+</div>
+
+<div class="item">
+  <h4>Cold Drink</h4>
+  <p>₹30</p>
+  <button onclick="order('Cold Drink - ₹30')">Order</button>
+</div>
+
+<script>
+function order(item){
+  var message = "I want to order: " + item;
+  window.location.href =
+  "https://wa.me/917003355253?text=" + encodeURIComponent(message);
+}
+</script>
+
+</body>
+</html>
