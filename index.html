@@ -114,10 +114,9 @@ function add(price,name){
 }
 
 function goCheckout(){
-  if(cart.length===0){
-    alert("Add items first!");
-    return;
-  }
+  localStorage.setItem("total", total);
+  window.location.href="checkout.html";
+}
   alert("Checkout page coming next step!");
 }
 </script>
