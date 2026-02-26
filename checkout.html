@@ -77,13 +77,14 @@ window.placeOrder = function(){
   }
 
   push(ref(db, "orders"), {
-    name,
-    phone,
-    address,
-    total,
-    payment,
-    time:new Date().toLocaleString()
-  });
+  name,
+  phone,
+  address,
+  total,
+  payment,
+  status: "Pending",
+  time:new Date().toLocaleString()
+});
 
   alert("Order Saved to Firebase!");
 
