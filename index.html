@@ -14,22 +14,31 @@ body{
 
 header{
   text-align:center;
-  padding:20px;
+  padding:25px;
   border-bottom:1px solid #FFD700;
 }
 
-.logo{
-  font-size:40px;
+.logo-circle{
+  width:90px;
+  height:90px;
+  margin:0 auto;
+  border-radius:50%;
+  background:radial-gradient(circle at top,#FFD700,#B8860B);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:36px;
   font-weight:bold;
-  background:linear-gradient(45deg,#FFD700,#FFA500);
-  -webkit-background-clip:text;
-  color:transparent;
+  color:#000;
+  box-shadow:0 0 20px #FFD700,
+             inset 0 0 15px rgba(0,0,0,0.5);
 }
 
 .brand{
-  font-size:24px;
+  font-size:26px;
   font-weight:bold;
-  margin-top:5px;
+  margin-top:12px;
+  letter-spacing:1px;
 }
 
 .location{
@@ -39,7 +48,7 @@ header{
 
 .delivery{
   font-size:13px;
-  margin-top:5px;
+  margin-top:6px;
 }
 
 .menu-card{
@@ -79,13 +88,11 @@ button{
 <body>
 
 <header>
-  <div class="logo">OB</div>
+  <div class="logo-circle">OB</div>
   <div class="brand">One Bite</div>
   <div class="location">Chandannagar</div>
   <div class="delivery">2km Free Delivery | After 2km ₹20</div>
 </header>
-
-<!-- MENU SECTION -->
 
 <div class="menu-card">
   <div>Veg Burger - ₹69</div>
@@ -103,16 +110,9 @@ button{
 </div>
 
 <div class="menu-card">
-  <div>Egg Fried Rice + Chilli Chicken - ₹149</div>
-  <button onclick="addItem(149)">Add</button>
-</div>
-
-<div class="menu-card">
   <div>Chicken Wings (4pcs) - ₹169</div>
   <button onclick="addItem(169)">Add</button>
 </div>
-
-<!-- CART BAR -->
 
 <div class="cart-bar">
   <div>Total: ₹<span id="total">0</span></div>
