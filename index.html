@@ -133,6 +133,9 @@ function checkout(){
     alert("Add items first!");
     return;
   }
+  localStorage.setItem("total", total);
+  window.location.href = "checkout.html";
+}
   alert("Checkout system coming next step!");
 }
 
