@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cloud Kitchen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+
+  <style>
+    body { font-family: Arial; padding: 15px; }
+    .item { border: 1px solid #ddd; padding: 10px; margin: 10px 0; }
+    button { padding: 8px 12px; background: green; color: white; border: none; }
+  </style>
+</head>
+
+<body>
+
+<h2>Cloud Kitchen</h2>
+<div id="menu"></div>
+
+<h3>Cart</h3>
+<div id="cart"></div>
+<button onclick="placeOrder()">Place Order (COD)</button>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  let cart = [];
+
+  function loadMenu() {
+    db.collection("menu").get().then(snapshot => {
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        document.getElementById("menu").innerHTML += `
+          <div class="item">
+            <h4>${data.name}</h4>
+            <p>₹${data.price}</p>
+            <button onclick="addToCart('${data.name}', ${data.price})">Add</button>
+          </div>
+        `;
+      });
+    });
+  }
+
+  function addToCart(name, price) {
+    cart.push({name, price});
+    renderCart();
+  }
+
+  function renderCart() {
+    let html = "";
+    cart.forEach(item => {
+      html += `<p>${item.name} - ₹${item.price}</p>`;
+    });
+    document.getElementById("cart").innerHTML = html;
+  }
+
+  function placeOrder() {
+    let total = cart.reduce((sum, item) => sum + item.price, 0);
+    
+    db.collection("orders").add({
+      items: cart,
+      total: total,
+      status: "Pending"
+    });
+
+    let message = "New Order:\n";
+    cart.forEach(item => {
+      message += item.name + " - ₹" + item.price + "\n";
+    });
+    message += "Total: ₹" + total;
+
+    window.location.href = "https://wa.me/91YOURNUMBER?text=" + encodeURIComponent(message);
+  }
+
+  loadMenu();
+</script>
+
+</body>
+</html>
