@@ -127,8 +127,19 @@ Payment: ${payment}`;
 }
 
 function payNow(){
-  let upiLink = `upi://pay?pa=${upiID}&pn=OneBite&am=${finalAmount}&cu=INR`;
+
+  if(finalAmount <= 0){
+    alert("Please place order first!");
+    return;
+  }
+
+  let upiLink = "upi://pay?pa=7003355253@ibl"
+                + "&pn=OneBite"
+                + "&am=" + finalAmount
+                + "&cu=INR";
+
   window.location.href = upiLink;
+
 }
 
 </script>
