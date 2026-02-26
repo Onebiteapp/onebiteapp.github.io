@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin - One Bite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
+<style>
+body{
+  background:#000;
+  color:#FFD700;
+  font-family:sans-serif;
+  text-align:center;
+}
+
+input{
+  padding:8px;
+  margin:10px;
+  width:70%;
+}
+
+button{
+  background:#FFD700;
+  color:#000;
+  padding:6px 12px;
+  border:none;
+  border-radius:6px;
+}
+
+.order-card{
+  background:#111;
+  margin:10px;
+  padding:10px;
+  border:1px solid #FFD700;
+  border-radius:10px;
+  text-align:left;
+}
+</style>
+</head>
+
+<body>
+
+<h2>One Bite Admin Panel</h2>
+
+<div id="loginSection">
+  <input type="password" id="pass" placeholder="Enter Password"><br>
+  <button onclick="login()">Login</button>
+</div>
+
+<div id="adminSection" style="display:none;">
+  <h3>Today's Orders</h3>
+  <div id="ordersList"></div>
+</div>
+
+<script>
+
+const adminPassword = "onebite123";
+
+function login(){
+  let entered = document.getElementById("pass").value;
+
+  if(entered === adminPassword){
+    document.getElementById("loginSection").style.display="none";
+    document.getElementById("adminSection").style.display="block";
+    loadOrders();
+  } else {
+    alert("Wrong Password!");
+  }
+}
+
+function loadOrders(){
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  let html = "";
+
+  if(orders.length === 0){
+    html = "<p>No orders yet</p>";
+  } else {
+    orders.reverse().forEach(order=>{
+      html += `
+      <div class="order-card">
+        <b>Name:</b> ${order.name}<br>
+        <b>Phone:</b> ${order.phone}<br>
+        <b>Address:</b> ${order.address}<br>
+        <b>Total:</b> ₹${order.total}<br>
+        <b>Delivery:</b> ₹${order.delivery}<br>
+        <b>Payment:</b> ${order.payment}<br>
+        <b>Time:</b> ${order.time}
+      </div>
+      `;
+    });
+  }
+
+  document.getElementById("ordersList").innerHTML = html;
+}
+
+</script>
+
+</body>
+</html>
