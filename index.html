@@ -41,8 +41,6 @@ input, select{
 <h1>🍔 One Bite</h1>
 <h3>2km Free Delivery | After 2km ₹20</h3>
 
-<!-- MENU -->
-
 <div class="menu">
   <h3>Veg Burger - ₹69</h3>
   <button onclick="addToCart(69,'Veg Burger')">Add</button>
@@ -51,21 +49,6 @@ input, select{
 <div class="menu">
   <h3>Chicken Burger - ₹79</h3>
   <button onclick="addToCart(79,'Chicken Burger')">Add</button>
-</div>
-
-<div class="menu">
-  <h3>Chicken Pizza - ₹169</h3>
-  <button onclick="addToCart(169,'Chicken Pizza')">Add</button>
-</div>
-
-<div class="menu">
-  <h3>Chicken Wings (4pcs) - ₹169</h3>
-  <button onclick="addToCart(169,'Chicken Wings')">Add</button>
-</div>
-
-<div class="menu">
-  <h3>Egg Chicken Fried Rice - ₹139</h3>
-  <button onclick="addToCart(139,'Egg Chicken Fried Rice')">Add</button>
 </div>
 
 <hr>
@@ -82,31 +65,32 @@ input, select{
 
 <select id="payment">
   <option value="COD">Cash On Delivery</option>
-  <option value="POD">Pay On Delivery</option>
+  <option value="POD">Pay On Delivery (Online)</option>
 </select>
 
 <br><br>
 <button onclick="placeOrder()">Place Order</button>
+
+<br><br>
+<div id="payNowSection" style="display:none;">
+  <button onclick="payOnline()">Pay Now</button>
+</div>
 
 <script>
 
 let total = 0;
 let delivery = 0;
 let cart = [];
+let finalAmount = 0;
 
 const kitchenLat = 22.8665;
 const kitchenLng = 88.3672;
+const upiID = "7003355253@ibl";
 
 function addToCart(price,item){
   total += price;
   cart.push(item + " - ₹" + price);
   document.getElementById("total").innerText = total;
-  updateFinal();
-}
-
-function updateFinal(){
-  document.getElementById("delivery").innerText = delivery;
-  document.getElementById("final").innerText = total + delivery;
 }
 
 function calculateDistance(userLat,userLng){
@@ -136,20 +120,17 @@ function placeOrder(){
 
     let distance = calculateDistance(userLat,userLng);
 
-    if(distance>2){
-      delivery = 20;
-    } else {
-      delivery = 0;
-    }
+    delivery = distance>2 ? 20 : 0;
+    finalAmount = total + delivery;
 
-    updateFinal();
+    document.getElementById("delivery").innerText = delivery;
+    document.getElementById("final").innerText = finalAmount;
 
     let name = document.getElementById("name").value;
     let phone = document.getElementById("phone").value;
     let address = document.getElementById("address").value;
     let payment = document.getElementById("payment").value;
 
-    let finalAmount = total + delivery;
     let itemsList = cart.join("\n");
 
     let message = `New Order - One Bite
@@ -169,7 +150,18 @@ Payment: ${payment}`;
     let whatsappURL = `https://wa.me/917003355253?text=${encodeURIComponent(message)}`;
     window.open(whatsappURL,"_blank");
 
+    if(payment === "POD"){
+      document.getElementById("payNowSection").style.display = "block";
+    } else {
+      document.getElementById("payNowSection").style.display = "none";
+    }
+
   });
+}
+
+function payOnline(){
+  let upiLink = `upi://pay?pa=${upiID}&pn=OneBite&am=${finalAmount}&cu=INR`;
+  window.location.href = upiLink;
 }
 
 </script>
