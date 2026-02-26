@@ -22,7 +22,22 @@
   <button onclick="addToCart(79)">Add</button>
 </div>
 
-<h2>Total: ₹<span id="total">0</span></h2>
+<h2>Food Total: ₹<span id="total">0</span></h2>
+<h2>Delivery: ₹<span id="delivery">0</span></h2>
+<h2>Final Total: ₹<span id="final">0</span></h2>
+
+<br>
+
+<input type="text" id="name" placeholder="Your Name"><br><br>
+<input type="text" id="phone" placeholder="Phone Number"><br><br>
+<input type="text" id="address" placeholder="Delivery Address"><br><br>
+
+<select id="payment">
+  <option value="COD">Cash On Delivery</option>
+  <option value="POD">Pay On Delivery</option>
+</select>
+
+<br><br>
 
 <button onclick="placeOrder()">Place Order</button>
 
