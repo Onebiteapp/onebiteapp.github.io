@@ -133,6 +133,20 @@ h3{color:gold;margin-top:20px;}
 <div class="cart">
 <div id="cartItems"></div>
 <b>Total: ₹<span id="total">0</span></b>
+
+<br><br>
+
+<input id="custName" placeholder="Your Name">
+<input id="custMobile" placeholder="Mobile Number">
+<input id="custAddress" placeholder="Full Address">
+
+<select id="delivery">
+<option value="0">Within 2KM (Free)</option>
+<option value="20">More than 2KM (+₹20)</option>
+</select>
+
+<button onclick="placeOrder()">Place Order</button>
+
 </div>
 
 <script>
@@ -151,8 +165,8 @@ for(var i=0;i<cart.length;i++){
 text+=cart[i].name+" ₹"+cart[i].price+
 " <button onclick='removeItem("+i+")'>X</button><br>";
 }
-document.getElementById("cartItems").innerHTML=text;
-document.getElementById("total").innerHTML=total;
+document.getElementById("cartItems").innerHTML = text;
+document.getElementById("total").innerHTML = total;
 }
 
 function removeItem(i){
@@ -160,6 +174,35 @@ total-=cart[i].price;
 cart.splice(i,1);
 showCart();
 }
+  function placeOrder(){
+
+if(cart.length==0){
+alert("Cart Empty");
+return;
+}
+
+var name=document.getElementById("custName").value;
+var mobile=document.getElementById("custMobile").value;
+var address=document.getElementById("custAddress").value;
+var delivery=parseInt(document.getElementById("delivery").value);
+
+var finalTotal=total+delivery;
+
+var message="New Order%0A";
+message+="Name: "+name+"%0A";
+message+="Mobile: "+mobile+"%0A";
+message+="Address: "+address+"%0A";
+message+="Items:%0A";
+
+for(var i=0;i<cart.length;i++){
+message+=cart[i].name+" ₹"+cart[i].price+"%0A";
+}
+
+message+="Delivery: ₹"+delivery+"%0A";
+message+="Total: ₹"+finalTotal;
+
+window.location.href="https://wa.me/917003355253?text="+message;
+  }
 </script>
 
 </body>
