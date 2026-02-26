@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Checkout - One Bite</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  background:#000;
+  color:#FFD700;
+  font-family:sans-serif;
+  text-align:center;
+  margin:0;
+}
+
+h2{margin-top:20px;}
+
+input,select{
+  padding:8px;
+  margin:8px;
+  width:80%;
+  border-radius:6px;
+  border:none;
+}
+
+button{
+  background:#FFD700;
+  color:#000;
+  padding:8px 15px;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+}
+
+#paySection{
+  margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Checkout - One Bite</h2>
+
+<h3>Food Total: ₹<span id="foodTotal">0</span></h3>
+<h3>Delivery: ₹<span id="delivery">0</span></h3>
+<h2>Final Total: ₹<span id="final">0</span></h2>
+
+<input type="text" id="name" placeholder="Your Name"><br>
+<input type="text" id="phone" placeholder="Phone Number"><br>
+<input type="text" id="address" placeholder="Delivery Address"><br>
+
+<select id="payment">
+<option value="COD">Cash On Delivery</option>
+<option value="POD">Pay Online (UPI)</option>
+</select>
+
+<br><br>
+<button onclick="placeOrder()">Place Order</button>
+
+<div id="paySection" style="display:none;">
+<button onclick="payNow()">Pay Now</button>
+</div>
+
+<script>
+
+let total = parseInt(localStorage.getItem("total")) || 0;
+document.getElementById("foodTotal").innerText = total;
+
+let delivery = 0;
+let finalAmount = 0;
+
+const kitchenLat = 22.8665;
+const kitchenLng = 88.3672;
+const upiID = "7003355253@ibl";
+
+function calculateDistance(userLat,userLng){
+  const R = 6371;
+  const dLat = (userLat - kitchenLat) * Math.PI/180;
+  const dLng = (userLng - kitchenLng) * Math.PI/180;
+  const a =
+    Math.sin(dLat/2)*Math.sin(dLat/2) +
+    Math.cos(kitchenLat*Math.PI/180) *
+    Math.cos(userLat*Math.PI/180) *
+    Math.sin(dLng/2)*Math.sin(dLng/2);
+  const c = 2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return R*c;
+}
+
+function placeOrder(){
+
+  if(total <= 0){
+    alert("No items selected!");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    function(position){
+
+      let distance = calculateDistance(
+        position.coords.latitude,
+        position.coords.longitude
+      );
+
+      delivery = distance > 2 ? 20 : 0;
+      finalAmount = total + delivery;
+
+      document.getElementById("delivery").innerText = delivery;
+      document.getElementById("final").innerText = finalAmount;
+
+      processOrder();
+
+    },
+    function(){
+      // যদি location না দেয়
+      delivery = 20;
+      finalAmount = total + delivery;
+      processOrder();
+    }
+  );
+}
+
+function processOrder(){
+
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let address = document.getElementById("address").value;
+  let payment = document.getElementById("payment").value;
+
+  if(name==="" || phone==="" || address===""){
+    alert("Please fill all details");
+    return;
+  }
+
+  // 🔥 SAVE ORDER FOR ADMIN
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+
+  orders.push({
+    name:name,
+    phone:phone,
+    address:address,
+    total:finalAmount,
+    delivery:delivery,
+    payment:payment,
+    time:new Date().toLocaleString()
+  });
+
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  // 🔥 SEND WHATSAPP
+  let message = `New Order - One Bite
+
+Name: ${name}
+Phone: ${phone}
+Address: ${address}
+
+Food Total: ₹${total}
+Delivery: ₹${delivery}
+Final: ₹${finalAmount}
+Payment: ${payment}`;
+
+  window.open(`https://wa.me/917003355253?text=${encodeURIComponent(message)}`);
+
+  if(payment === "POD"){
+    document.getElementById("paySection").style.display = "block";
+  }
+
+}
+
+function payNow(){
+
+  if(finalAmount <= 0){
+    alert("Place order first!");
+    return;
+  }
+
+  let upiLink = "upi://pay?pa=7003355253@ibl"
+                + "&pn=OneBite"
+                + "&am=" + finalAmount
+                + "&cu=INR";
+
+  window.open(upiLink, "_self");
+
+}
+
+</script>
+
+</body>
+</html>
