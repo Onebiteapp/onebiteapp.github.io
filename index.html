@@ -146,7 +146,7 @@ h3{color:gold;margin-top:20px;}
 </select>
 
 <button onclick="placeOrder()">Place Order</button>
-
+<button onclick="payUPI()">Pay Now (UPI)</button>
 </div>
 
 <script>
@@ -202,6 +202,21 @@ message+="Delivery: ₹"+delivery+"%0A";
 message+="Total: ₹"+finalTotal;
 
 window.location.href="https://wa.me/917003355253?text="+message;
+  }
+  function payUPI(){
+
+if(cart.length==0){
+alert("Cart Empty");
+return;
+}
+
+var delivery=parseInt(document.getElementById("delivery").value);
+var finalTotal=total+delivery;
+
+var upiLink="upi://pay?pa=7003355253@ibl&pn=OneBiteChandannagar&am="+finalTotal+"&cu=INR";
+
+window.location.href=upiLink;
+
   }
 </script>
 
