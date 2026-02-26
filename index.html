@@ -14,7 +14,7 @@ body{
 
 header{
   text-align:center;
-  padding:25px;
+  padding:20px;
   border-bottom:1px solid #FFD700;
 }
 
@@ -35,10 +35,9 @@ header{
 }
 
 .brand{
-  font-size:26px;
+  font-size:24px;
   font-weight:bold;
-  margin-top:12px;
-  letter-spacing:1px;
+  margin-top:10px;
 }
 
 .location{
@@ -46,9 +45,9 @@ header{
   color:#ccc;
 }
 
-.delivery{
+.delivery-info{
   font-size:13px;
-  margin-top:6px;
+  margin-top:5px;
 }
 
 .menu-card{
@@ -91,7 +90,7 @@ button{
   <div class="logo-circle">OB</div>
   <div class="brand">One Bite</div>
   <div class="location">Chandannagar</div>
-  <div class="delivery">2km Free Delivery | After 2km ₹20</div>
+  <div class="delivery-info">2km Free Delivery | After 2km ₹20</div>
 </header>
 
 <div class="menu-card">
@@ -133,10 +132,9 @@ function checkout(){
     alert("Add items first!");
     return;
   }
+
   localStorage.setItem("total", total);
   window.location.href = "checkout.html";
-}
-  alert("Checkout system coming next step!");
 }
 
 </script>
