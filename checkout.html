@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>One Bite - Chandannagar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  background:#000;
+  color:#FFD700;
+  font-family:sans-serif;
+}
+
+header{
+  text-align:center;
+  padding:15px;
+  border-bottom:1px solid #FFD700;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:bold;
+}
+
+.category{
+  padding:10px;
+  font-size:18px;
+  border-bottom:1px solid #333;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  padding:12px;
+  border-bottom:1px solid #222;
+}
+
+button{
+  background:#FFD700;
+  border:none;
+  padding:5px 10px;
+  font-weight:bold;
+  border-radius:5px;
+}
+
+.cart-bar{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#111;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  border-top:1px solid #FFD700;
+}
+
+.cart-drawer{
+  position:fixed;
+  bottom:60px;
+  width:100%;
+  background:#111;
+  max-height:300px;
+  overflow:auto;
+  display:none;
+  padding:10px;
+  border-top:1px solid #FFD700;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🍔 One Bite - Chandannagar</div>
+  <div>2km Free Delivery | After 2km ₹20</div>
+</header>
+
+<div class="category">Burgers</div>
+
+<div class="item">
+  <span>Veg Burger ₹69</span>
+  <button onclick="addItem('Veg Burger',69)">Add</button>
+</div>
+
+<div class="item">
+  <span>Chicken Burger ₹79</span>
+  <button onclick="addItem('Chicken Burger',79)">Add</button>
+</div>
+
+<div class="category">Pizza</div>
+
+<div class="item">
+  <span>Chicken Pizza ₹169</span>
+  <button onclick="addItem('Chicken Pizza',169)">Add</button>
+</div>
+
+<div class="category">Combos</div>
+
+<div class="item">
+  <span>Rice + Chilli Chicken ₹149</span>
+  <button onclick="addItem('Rice Combo',149)">Add</button>
+</div>
+
+<div class="cart-drawer" id="cartDrawer"></div>
+
+<div class="cart-bar">
+  <div>Total: ₹<span id="total">0</span></div>
+  <div>
+    <button onclick="toggleCart()">Cart</button>
+    <button onclick="checkout()">Checkout</button>
+  </div>
+</div>
+
+<script>
+
+let cart = [];
+let total = 0;
+
+function addItem(name,price){
+  cart.push({name,price});
+  total += price;
+  updateCart();
+}
+
+function updateCart(){
+  document.getElementById("total").innerText = total;
+  let html = "";
+  cart.forEach((item,index)=>{
+    html += `
+      <div>
+        ${item.name} - ₹${item.price}
+        <button onclick="removeItem(${index})">X</button>
+      </div>
+    `;
+  });
+  document.getElementById("cartDrawer").innerHTML = html;
+}
+
+function removeItem(index){
+  total -= cart[index].price;
+  cart.splice(index,1);
+  updateCart();
+}
+
+function toggleCart(){
+  let drawer = document.getElementById("cartDrawer");
+  drawer.style.display = drawer.style.display === "none" ? "block" : "none";
+}
+
+function checkout(){
+  if(total<=0){
+    alert("Add items first!");
+    return;
+  }
+  localStorage.setItem("total",total);
+  window.location.href="checkout.html";
+}
+
+</script>
+
+</body>
+</html>
