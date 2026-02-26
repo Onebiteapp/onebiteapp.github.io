@@ -1,54 +1,152 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>One Bite Cloud Kitchen</title>
+  <title>One Bite Chandannagar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
-    body { font-family: Arial; padding: 15px; background:#f2f2f2; }
-    .item {
-      background:white;
-      padding:10px;
-      margin:10px 0;
-      border-radius:8px;
-      box-shadow:0 2px 5px rgba(0,0,0,0.1);
-    }
-    button {
-      padding:8px 12px;
-      background:green;
+    body{
+      font-family: Arial;
+      margin:0;
+      background:#111;
       color:white;
+    }
+
+    header{
+      background:black;
+      text-align:center;
+      padding:20px;
+    }
+
+    header img{
+      width:120px;
+    }
+
+    h2{
+      text-align:center;
+      margin-top:10px;
+    }
+
+    .menu{
+      padding:15px;
+    }
+
+    .item{
+      background:#1e1e1e;
+      padding:15px;
+      margin:10px 0;
+      border-radius:10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    button{
+      padding:6px 10px;
+      background:gold;
       border:none;
       border-radius:5px;
+      font-weight:bold;
     }
+
+    .cart{
+      background:black;
+      padding:15px;
+      position:fixed;
+      bottom:0;
+      width:100%;
+    }
+
+    input, select{
+      width:100%;
+      padding:8px;
+      margin:5px 0;
+      border-radius:5px;
+      border:none;
+    }
+
   </style>
 </head>
+
 <body>
 
-<h2>🍔 One Bite Cloud Kitchen</h2>
+<header>
+  <img src="https://i.imgur.com/placeholder.png">
+  <h2>One Bite Chandannagar</h2>
+</header>
 
-<div class="item">
-  <h4>Chicken Biryani</h4>
-  <p>₹160</p>
-  <button onclick="order('Chicken Biryani - ₹160')">Order</button>
+<div class="menu">
+
+  <div class="item">
+    <span>Chicken Burger - ₹79</span>
+    <button onclick="addItem('Chicken Burger',79)">Add</button>
+  </div>
+
+  <div class="item">
+    <span>Veg Burger - ₹69</span>
+    <button onclick="addItem('Veg Burger',69)">Add</button>
+  </div>
+
+  <div class="item">
+    <span>Egg Fried Rice - ₹109</span>
+    <button onclick="addItem('Egg Fried Rice',109)">Add</button>
+  </div>
+
+  <div class="item">
+    <span>Chicken Butter Masala - ₹179</span>
+    <button onclick="addItem('Chicken Butter Masala',179)">Add</button>
+  </div>
+
 </div>
 
-<div class="item">
-  <h4>Burger</h4>
-  <p>₹80</p>
-  <button onclick="order('Burger - ₹80')">Order</button>
-</div>
+<div class="cart">
+  <div id="cartItems"></div>
+  <b>Total: ₹<span id="total">0</span></b>
 
-<div class="item">
-  <h4>Cold Drink</h4>
-  <p>₹30</p>
-  <button onclick="order('Cold Drink - ₹30')">Order</button>
+  <input type="text" id="name" placeholder="Your Name">
+  <input type="text" id="mobile" placeholder="Mobile Number">
+  <input type="text" id="address" placeholder="Full Address">
+
+  <select id="distance">
+    <option value="0">Within 2 KM (Free)</option>
+    <option value="20">More than 2 KM (+₹20)</option>
+  </select>
+
+  <button onclick="placeOrder()">Place Order (COD)</button>
 </div>
 
 <script>
-function order(item){
-  var message = "I want to order: " + item;
-  window.location.href =
-  "https://wa.me/917003355253?text=" + encodeURIComponent(message);
+
+let cart = [];
+let total = 0;
+
+function addItem(name,price){
+  cart.push(name + " ₹" + price);
+  total += price;
+  document.getElementById("cartItems").innerHTML = cart.join("<br>");
+  document.getElementById("total").innerText = total;
 }
+
+function placeOrder(){
+
+  let name = document.getElementById("name").value;
+  let mobile = document.getElementById("mobile").value;
+  let address = document.getElementById("address").value;
+  let deliveryCharge = parseInt(document.getElementById("distance").value);
+
+  let finalTotal = total + deliveryCharge;
+
+  let message = "New Order%0A";
+  message += "Name: "+name+"%0A";
+  message += "Mobile: "+mobile+"%0A";
+  message += "Address: "+address+"%0A";
+  message += "Items:%0A"+cart.join("%0A")+"%0A";
+  message += "Delivery Charge: ₹"+deliveryCharge+"%0A";
+  message += "Total: ₹"+finalTotal;
+
+  window.location.href="https://wa.me/917003355253?text="+message;
+}
+
 </script>
 
 </body>
