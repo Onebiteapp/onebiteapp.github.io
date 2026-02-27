@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Bite Chandannagar</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;}
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
+color:white;
+}
+
+header{
+background:#000;
+padding:18px;
+text-align:center;
+border-bottom:3px solid gold;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+h1{
+margin:5px;
+color:gold;
+font-weight:700;
+letter-spacing:1px;
+}
+
+header p{
+margin:0;
+font-size:14px;
+color:#ccc;
+}
+
+.section{
+padding:15px;
+padding-bottom:260px;
+}
+
+h3{
+color:gold;
+margin-top:25px;
+border-left:4px solid gold;
+padding-left:8px;
+}
+
+.item{
+background:#1e1e1e;
+margin:8px 0;
+padding:12px;
+border-radius:12px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.4);
+transition:0.3s;
+}
+
+.item:hover{
+transform:translateY(-2px);
+background:#252525;
+}
+
+button{
+background:gold;
+border:none;
+padding:7px 14px;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#ffcc00;
+transform:scale(1.05);
+}
+
+.cart{
+position:fixed;
+bottom:0;
+width:100%;
+background:rgba(0,0,0,0.95);
+backdrop-filter:blur(10px);
+padding:15px;
+border-top:3px solid gold;
+max-height:260px;
+overflow:auto;
+box-shadow:0 -5px 20px rgba(0,0,0,0.6);
+}
+
+input, select{
+width:100%;
+margin:6px 0;
+padding:8px;
+border-radius:6px;
+border:none;
+outline:none;
+font-family:'Poppins',sans-serif;
+}
+
+#cartItems button{
+background:red;
+color:white;
+padding:3px 6px;
+border-radius:5px;
+font-size:12px;
+margin-left:6px;
+}
+
+.totalBox{
+margin-top:8px;
+font-size:16px;
+color:gold;
+font-weight:600;
+}
+
+.payBtn{
+background:#00c853;
+color:white;
+margin-top:5px;
+}
+
+.payBtn:hover{
+background:#00e676;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🍔 One Bite Chandannagar</h1>
+<p>Within 2KM Free Delivery | After 2KM ₹20</p>
+</header>
+
+<div class="section">
+
+<!-- Burger -->
+<h3>Burger</h3>
+<div class="item"><span>Veg Burger ₹69</span><button onclick="add('Veg Burger',69)">Add</button></div>
+<div class="item"><span>Chicken Burger ₹79</span><button onclick="add('Chicken Burger',79)">Add</button></div>
+<div class="item"><span>Aloo Tikki Burger ₹59</span><button onclick="add('Aloo Tikki Burger',59)">Add</button></div>
+<div class="item"><span>One Bite Special Burger ₹130</span><button onclick="add('One Bite Special Burger',130)">Add</button></div>
+
+<!-- Sandwich -->
+<h3>Sandwich</h3>
+<div class="item"><span>Veg Sandwich ₹59</span><button onclick="add('Veg Sandwich',59)">Add</button></div>
+<div class="item"><span>Corn Sandwich ₹79</span><button onclick="add('Corn Sandwich',79)">Add</button></div>
+<div class="item"><span>Panner Sandwich ₹89</span><button onclick="add('Panner Sandwich',89)">Add</button></div>
+<div class="item"><span>Chicken Sandwich ₹99</span><button onclick="add('Chicken Sandwich',99)">Add</button></div>
+
+<!-- Pizza -->
+<h3>Pizza</h3>
+<div class="item"><span>Veg Pizza ₹130</span><button onclick="add('Veg Pizza',130)">Add</button></div>
+<div class="item"><span>Corn Cheese Pizza ₹120</span><button onclick="add('Corn Cheese Pizza',120)">Add</button></div>
+<div class="item"><span>Chicken Pizza ₹169</span><button onclick="add('Chicken Pizza',169)">Add</button></div>
+<div class="item"><span>Panner Pizza ₹179</span><button onclick="add('Panner Pizza',179)">Add</button></div>
+<div class="item"><span>One Bite Special Pizza ₹199</span><button onclick="add('One Bite Special Pizza',199)">Add</button></div>
+
+<!-- Snacks -->
+<h3>Snacks</h3>
+<div class="item"><span>Veg Nuggets ₹89</span><button onclick="add('Veg Nuggets',89)">Add</button></div>
+<div class="item"><span>Chicken Nuggets ₹99</span><button onclick="add('Chicken Nuggets',99)">Add</button></div>
+<div class="item"><span>Veg Momo ₹79</span><button onclick="add('Veg Momo',79)">Add</button></div>
+<div class="item"><span>Chicken Momo ₹89</span><button onclick="add('Chicken Momo',89)">Add</button></div>
+<div class="item"><span>Masala Sweetcorn ₹89</span><button onclick="add('Masala Sweetcorn',89)">Add</button></div>
+<div class="item"><span>French Fries Half ₹69</span><button onclick="add('French Fries Half',69)">Add</button></div>
+<div class="item"><span>French Fries Full ₹119</span><button onclick="add('French Fries Full',119)">Add</button></div>
+<div class="item"><span>Aloo Tikki (4pcs) ₹99</span><button onclick="add('Aloo Tikki 4pcs',99)">Add</button></div>
+<div class="item"><span>Crispy Fried Chicken ₹149</span><button onclick="add('Crispy Fried Chicken',149)">Add</button></div>
+<div class="item"><span>Chicken Wings ₹169</span><button onclick="add('Chicken Wings',169)">Add</button></div>
+<div class="item"><span>Fish Finger ₹159</span><button onclick="add('Fish Finger',159)">Add</button></div>
+<div class="item"><span>Chili Chicken Dry ₹159</span><button onclick="add('Chili Chicken Dry',159)">Add</button></div>
+<div class="item"><span>Chili Chicken Gravy ₹169</span><button onclick="add('Chili Chicken Gravy',169)">Add</button></div>
+<div class="item"><span>Chili Paneer Dry ₹179</span><button onclick="add('Chili Paneer Dry',179)">Add</button></div>
+<div class="item"><span>Chili Paneer Gravy ₹189</span><button onclick="add('Chili Paneer Gravy',189)">Add</button></div>
+
+<!-- Combos -->
+<h3>Combos / Thali</h3>
+<div class="item"><span>Basanti Pulao + Chicken Kosha + Soft Drink ₹139</span><button onclick="add('Basanti Pulao Chicken Combo',139)">Add</button></div>
+<div class="item"><span>Basanti Pulao + Aloo Dum + Soft Drink ₹129</span><button onclick="add('Basanti Pulao Veg Combo',129)">Add</button></div>
+<div class="item"><span>Steamed Rice + Chicken Kosha + Soft Drink ₹139</span><button onclick="add('Steamed Rice Chicken Combo',139)">Add</button></div>
+
+<!-- Chinese Combos -->
+<h3>Chinese Combos</h3>
+<div class="item"><span>Egg Fried Rice + Chili Chicken ₹149</span><button onclick="add('Egg Fried Rice Combo',149)">Add</button></div>
+<div class="item"><span>Egg Chicken Fried Rice + Chili Chicken ₹179</span><button onclick="add('Egg Chicken Fried Rice Combo',179)">Add</button></div>
+<div class="item"><span>Egg Noodles + Chili Chicken ₹159</span><button onclick="add('Egg Noodles Combo',159)">Add</button></div>
+<div class="item"><span>Egg Chicken Noodles + Chili Chicken ₹179</span><button onclick="add('Egg Chicken Noodles Combo',179)">Add</button></div>
+<div class="item"><span>Veg Fried Rice + Chili Paneer ₹199</span><button onclick="add('Veg Fried Rice Combo',199)">Add</button></div>
+<div class="item"><span>Veg Noodles + Chili Paneer ₹169</span><button onclick="add('Veg Noodles Combo',169)">Add</button></div>
+
+<!-- Maggie -->
+<h3>Maggie</h3>
+<div class="item"><span>Plain Maggi ₹69</span><button onclick="add('Plain Maggi',69)">Add</button></div>
+<div class="item"><span>Veggies Maggi ₹89</span><button onclick="add('Veggies Maggi',89)">Add</button></div>
+<div class="item"><span>Egg Maggi ₹99</span><button onclick="add('Egg Maggi',99)">Add</button></div>
+<div class="item"><span>Chicken Maggi ₹139</span><button onclick="add('Chicken Maggi',139)">Add</button></div>
+<div class="item"><span>Egg Chicken Maggi ₹150</span><button onclick="add('Egg Chicken Maggi',150)">Add</button></div>
+<div class="item"><span>Egg Cheese Maggi ₹130</span><button onclick="add('Egg Cheese Maggi',130)">Add</button></div>
+<div class="item"><span>Egg Chicken Cheese Maggi ₹170</span><button onclick="add('Egg Chicken Cheese Maggi',170)">Add</button></div>
+<div class="item"><span>Fried Egg Maggi ₹120</span><button onclick="add('Fried Egg Maggi',120)">Add</button></div>
+
+<!-- Omelette -->
+<h3>Omelette</h3>
+<div class="item"><span>Bread Omelette 1 Egg ₹60</span><button onclick="add('Bread Omelette 1 Egg',60)">Add</button></div>
+<div class="item"><span>Bread Omelette 2 Eggs ₹80</span><button onclick="add('Bread Omelette 2 Eggs',80)">Add</button></div>
+<div class="item"><span>Onion Omelette 1 Egg ₹45</span><button onclick="add('Onion Omelette 1 Egg',45)">Add</button></div>
+<div class="item"><span>Onion Omelette 2 Eggs ₹59</span><button onclick="add('Onion Omelette 2 Eggs',59)">Add</button></div>
+<div class="item"><span>Veg Omelette 1 Egg ₹45</span><button onclick="add('Veg Omelette 1 Egg',45)">Add</button></div>
+<div class="item"><span>Cheese Omelette ₹80</span><button onclick="add('Cheese Omelette',80)">Add</button></div>
+<div class="item"><span>Boiled Eggs 2pcs ₹50</span><button onclick="add('Boiled Eggs',50)">Add</button></div>
+
+<!-- Main Course -->
+<h3>Main Course</h3>
+<div class="item"><span>Aloo Dum 4pcs ₹79</span><button onclick="add('Aloo Dum',79)">Add</button></div>
+<div class="item"><span>Chicken Kosha 4pcs ₹159</span><button onclick="add('Chicken Kosha',159)">Add</button></div>
+<div class="item"><span>Panner Butter Masala ₹210</span><button onclick="add('Panner Butter Masala',210)">Add</button></div>
+<div class="item"><span>Chicken Butter Masala ₹179</span><button onclick="add('Chicken Butter Masala',179)">Add</button></div>
+
+<!-- Fried Rice / Noodles -->
+<h3>Fried Rice / Noodles</h3>
+<div class="item"><span>Veg Hakka Noodles ₹69</span><button onclick="add('Veg Hakka Noodles',69)">Add</button></div>
+<div class="item"><span>Egg Hakka Noodles ₹89</span><button onclick="add('Egg Hakka Noodles',89)">Add</button></div>
+<div class="item"><span>Mix Hakka Noodles ₹129</span><button onclick="add('Mix Hakka Noodles',129)">Add</button></div>
+<div class="item"><span>Veg Fried Rice ₹79</span><button onclick="add('Veg Fried Rice',79)">Add</button></div>
+<div class="item"><span>Egg Fried Rice ₹109</span><button onclick="add('Egg Fried Rice',109)">Add</button></div>
+<div class="item"><span>Egg Chicken Fried Rice ₹139</span><button onclick="add('Egg Chicken Fried Rice',139)">Add</button></div>
+
+<!-- Tea -->
+<h3>Tea</h3>
+<div class="item"><span>Red Tea ₹30</span><button onclick="add('Red Tea',30)">Add</button></div>
+<div class="item"><span>Milk Tea ₹35</span><button onclick="add('Milk Tea',35)">Add</button></div>
+<div class="item"><span>One Bite Special Tea ₹55</span><button onclick="add('One Bite Special Tea',55)">Add</button></div>
+
+<!-- Chota Combo -->
+<h3>Chota Combo</h3>
+<div class="item"><span>Luchi + Tarkari ₹69</span><button onclick="add('Luchi Combo',69)">Add</button></div>
+<div class="item"><span>Paratha + Tarkari ₹69</span><button onclick="add('Paratha Combo',69)">Add</button></div>
+<div class="item"><span>Luchi + Aloo Dum ₹79</span><button onclick="add('Luchi Aloo Dum',79)">Add</button></div>
+<div class="item"><span>Paratha + Aloo Dum ₹79</span><button onclick="add('Paratha Aloo Dum',79)">Add</button></div>
+
+<!-- Pasta -->
+<h3>Pasta</h3>
+<div class="item"><span>Veg Pasta ₹79</span><button onclick="add('Veg Pasta',79)">Add</button></div>
+<div class="item"><span>Egg Pasta ₹99</span><button onclick="add('Egg Pasta',99)">Add</button></div>
+<div class="item"><span>Veg White Sauce Pasta ₹159</span><button onclick="add('Veg White Sauce Pasta',159)">Add</button></div>
+<div class="item"><span>Chicken White Sauce Pasta ₹189</span><button onclick="add('Chicken White Sauce Pasta',189)">Add</button></div>
+
+<!-- Rice -->
+<h3>Rice</h3>
+<div class="item"><span>Steam Rice ₹89</span><button onclick="add('Steam Rice',89)">Add</button></div>
+<div class="item"><span>Basanti Pulao ₹99</span><button onclick="add('Basanti Pulao',99)">Add</button></div>
+
+</div>
+
+<!-- CART SECTION -->
+<div class="cart">
+<div id="cartItems"></div>
+<div class="totalBox">Total: ₹<span id="total">0</span></div>
+
+<input id="custName" placeholder="Your Name">
+<input id="custMobile" placeholder="Mobile Number">
+<input id="custAddress" placeholder="Full Address">
+
+<select id="delivery">
+<option value="0">Within 2KM (Free)</option>
+<option value="20">More than 2KM (+₹20)</option>
+</select>
+
+<button onclick="placeOrder()">Place Order (WhatsApp)</button>
+<button class="payBtn" onclick="payUPI()">Pay Now (UPI)</button>
+</div>
+
+<script>
+var cart=[];
+var total=0;
+
+function add(name,price){
+cart.push({name:name,price:price});
+total+=price;
+showCart();
+}
+
+function showCart(){
+var text="";
+for(var i=0;i<cart.length;i++){
+text+=cart[i].name+" ₹"+cart[i].price+
+"<button onclick='removeItem("+i+")'>X</button><br>";
+}
+document.getElementById("cartItems").innerHTML = text;
+document.getElementById("total").innerHTML = total;
+}
+
+function removeItem(i){
+total-=cart[i].price;
+cart.splice(i,1);
+showCart();
+}
+
+function placeOrder(){
+if(cart.length==0){ alert("Cart Empty"); return; }
+
+var name=document.getElementById("custName").value;
+var mobile=document.getElementById("custMobile").value;
+var address=document.getElementById("custAddress").value;
+var delivery=parseInt(document.getElementById("delivery").value);
+var finalTotal=total+delivery;
+
+var message="New Order%0A";
+message+="Name: "+name+"%0A";
+message+="Mobile: "+mobile+"%0A";
+message+="Address: "+address+"%0A";
+message+="Items:%0A";
+
+for(var i=0;i<cart.length;i++){
+message+=cart[i].name+" ₹"+cart[i].price+"%0A";
+}
+
+message+="Delivery: ₹"+delivery+"%0A";
+message+="Total: ₹"+finalTotal;
+
+window.location.href="https://wa.me/917003355253?text="+message;
+}
+
+function payUPI(){
+if(cart.length==0){ alert("Cart Empty"); return; }
+
+var delivery=parseInt(document.getElementById("delivery").value);
+var finalTotal=total+delivery;
+
+var upiLink="upi://pay?pa=7003355253@ibl&pn=OneBiteChandannagar&am="+finalTotal+"&cu=INR";
+window.location.href=upiLink;
+}
+</script>
+
+</body>
+</html>
