@@ -280,64 +280,98 @@ background:#00e676;
 </div>
 
 <script>
-var cart=[];
-var total=0;
+var cart = {};
 
-function add(name,price){
-cart.push({name:name,price:price});
-total+=price;
-showCart();
+function add(name, price) {
+    if (cart[name]) {
+        cart[name].qty += 1;
+    } else {
+        cart[name] = { price: price, qty: 1 };
+    }
+    showCart();
 }
 
-function showCart(){
-var text="";
-for(var i=0;i<cart.length;i++){
-text+=cart[i].name+" ₹"+cart[i].price+
-"<button onclick='removeItem("+i+")'>X</button><br>";
-}
-document.getElementById("cartItems").innerHTML = text;
-document.getElementById("total").innerHTML = total;
+function increase(name) {
+    cart[name].qty += 1;
+    showCart();
 }
 
-function removeItem(i){
-total-=cart[i].price;
-cart.splice(i,1);
-showCart();
+function decrease(name) {
+    cart[name].qty -= 1;
+    if (cart[name].qty <= 0) {
+        delete cart[name];
+    }
+    showCart();
+}
+
+function showCart() {
+    var text = "";
+    var total = 0;
+
+    for (var item in cart) {
+        var subtotal = cart[item].price * cart[item].qty;
+        total += subtotal;
+
+        text += item + " ₹" + cart[item].price +
+            " x " + cart[item].qty +
+            " = ₹" + subtotal +
+            " <button onclick=\"increase('" + item + "')\">+</button>" +
+            " <button onclick=\"decrease('" + item + "')\">-</button><br>";
+    }
+
+    document.getElementById("cartItems").innerHTML = text;
+    document.getElementById("total").innerHTML = total;
 }
 
 function placeOrder(){
-if(cart.length==0){ alert("Cart Empty"); return; }
+    if(Object.keys(cart).length === 0){
+        alert("Cart Empty");
+        return;
+    }
 
-var name=document.getElementById("custName").value;
-var mobile=document.getElementById("custMobile").value;
-var address=document.getElementById("custAddress").value;
-var delivery=parseInt(document.getElementById("delivery").value);
-var finalTotal=total+delivery;
+    var name=document.getElementById("custName").value;
+    var mobile=document.getElementById("custMobile").value;
+    var address=document.getElementById("custAddress").value;
+    var delivery=parseInt(document.getElementById("delivery").value);
 
-var message="New Order%0A";
-message+="Name: "+name+"%0A";
-message+="Mobile: "+mobile+"%0A";
-message+="Address: "+address+"%0A";
-message+="Items:%0A";
+    var total = 0;
+    var message="New Order%0A";
+    message+="Name: "+name+"%0A";
+    message+="Mobile: "+mobile+"%0A";
+    message+="Address: "+address+"%0A";
+    message+="Items:%0A";
 
-for(var i=0;i<cart.length;i++){
-message+=cart[i].name+" ₹"+cart[i].price+"%0A";
-}
+    for (var item in cart) {
+        var subtotal = cart[item].price * cart[item].qty;
+        total += subtotal;
+        message += item+" x "+cart[item].qty+" = ₹"+subtotal+"%0A";
+    }
 
-message+="Delivery: ₹"+delivery+"%0A";
-message+="Total: ₹"+finalTotal;
+    var finalTotal = total + delivery;
 
-window.location.href="https://wa.me/917003355253?text="+message;
+    message+="Delivery: ₹"+delivery+"%0A";
+    message+="Total: ₹"+finalTotal;
+
+    window.location.href="https://wa.me/917003355253?text="+message;
 }
 
 function payUPI(){
-if(cart.length==0){ alert("Cart Empty"); return; }
+    if(Object.keys(cart).length === 0){
+        alert("Cart Empty");
+        return;
+    }
 
-var delivery=parseInt(document.getElementById("delivery").value);
-var finalTotal=total+delivery;
+    var delivery=parseInt(document.getElementById("delivery").value);
+    var total = 0;
 
-var upiLink="upi://pay?pa=7003355253@ibl&pn=OneBiteChandannagar&am="+finalTotal+"&cu=INR";
-window.location.href=upiLink;
+    for (var item in cart) {
+        total += cart[item].price * cart[item].qty;
+    }
+
+    var finalTotal = total + delivery;
+
+    var upiLink="upi://pay?pa=7003355253@ibl&pn=OneBiteChandannagar&am="+finalTotal+"&cu=INR";
+    window.location.href=upiLink;
 }
 </script>
 
