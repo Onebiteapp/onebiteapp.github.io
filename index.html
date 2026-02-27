@@ -353,7 +353,8 @@ function placeOrder(){
     message+="Delivery: ₹"+delivery+"%0A";
     message+="Total: ₹"+finalTotal;
 
-    window.location.href="https://wa.me/917003355253?text="+message;
+    var whatsappURL = "https://wa.me/917003355253?text="+message;
+showOrderSuccess(whatsappURL);
 }
 
 function payUPI(){
