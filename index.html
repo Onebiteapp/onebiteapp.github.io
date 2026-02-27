@@ -373,6 +373,13 @@ function payUPI(){
 
     var upiLink="upi://pay?pa=7003355253@ibl&pn=OneBiteChandannagar&am="+finalTotal+"&cu=INR";
     window.location.href=upiLink;
+    function showOrderSuccess(url){
+    document.getElementById("orderSuccess").style.display="flex";
+
+    setTimeout(function(){
+        window.location.href = url;
+    },1500);
+        }
 }
     window.onload = function(){
     showCart();
