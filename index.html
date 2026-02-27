@@ -280,7 +280,7 @@ background:#00e676;
 </div>
 
 <script>
-var cart = {};
+var cart = JSON.parse(localStorage.getItem("onebiteCart")) || {};
 
 function add(name, price) {
     if (cart[name]) {
@@ -321,6 +321,7 @@ function showCart() {
 
     document.getElementById("cartItems").innerHTML = text;
     document.getElementById("total").innerHTML = total;
+    localStorage.setItem("onebiteCart", JSON.stringify(cart));
 }
 
 function placeOrder(){
@@ -373,6 +374,9 @@ function payUPI(){
     var upiLink="upi://pay?pa=7003355253@ibl&pn=OneBiteChandannagar&am="+finalTotal+"&cu=INR";
     window.location.href=upiLink;
 }
+    window.onload = function(){
+    showCart();
+    }
 </script>
 <script>
 if ('serviceWorker' in navigator) {
