@@ -201,18 +201,7 @@ message+=cart[i].name+" ₹"+cart[i].price+"%0A";
 
 message+="Delivery: ₹"+delivery+"%0A";
 message+="Total: ₹"+finalTotal;
-fetch("https://api.allorigins.win/raw?url=" + 
-encodeURIComponent("https://api.telegram.org/bot8365741689:AAGNIGXk9UZv8_9Dd7ggSXLhg4F4xODNxkg/sendMessage?chat_id=6907248260&text=" + message)
-);
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-chat_id:"6907248260",
-text:message
-})
-});
+    
 window.location.href="https://wa.me/917003355253?text="+message;
   }
   function payUPI(){
