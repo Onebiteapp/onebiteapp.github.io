@@ -353,7 +353,7 @@ function placeOrder(){
     message+="Delivery: ₹"+delivery+"%0A";
     message+="Total: ₹"+finalTotal;
 
-    var whatsappURL = "https://wa.me/917003355253?text="+message;
+    var whatsappURL = "https://wa.me/917003355253?text=" + message;
 showOrderSuccess(whatsappURL);
 }
 
@@ -374,6 +374,7 @@ function payUPI(){
 
     var upiLink="upi://pay?pa=7003355253@ibl&pn=OneBiteChandannagar&am="+finalTotal+"&cu=INR";
     window.location.href=upiLink;
+}
     function showOrderSuccess(url){
     document.getElementById("orderSuccess").style.display="flex";
 
