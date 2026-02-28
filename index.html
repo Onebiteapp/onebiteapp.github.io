@@ -3,6 +3,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>One Bite Chandannagar</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="icon-192.png">    
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -372,6 +375,10 @@ function payUPI(){
 
     var upiLink="upi://pay?pa=7003355253@ibl&pn=OneBiteChandannagar&am="+finalTotal+"&cu=INR";
     window.location.href=upiLink;
+}
+    <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
 }
 </script>
 
