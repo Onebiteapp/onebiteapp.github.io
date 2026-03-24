@@ -381,6 +381,62 @@ function payUPI(){
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
 }
+  function generateBill(){
+    if(Object.keys(cart).length === 0){
+        alert("Cart Empty");
+        return;
+    }
+
+    var name=document.getElementById("custName").value;
+    var mobile=document.getElementById("custMobile").value;
+    var address=document.getElementById("custAddress").value;
+    var delivery=parseInt(document.getElementById("delivery").value);
+
+    var total = 0;
+
+    var bill = `
+    <div style="text-align:center;">
+        <img src="logo.png" style="width:80px;"><br>
+        <h2>One Bite Chandannagar</h2>
+        <hr>
+    </div>
+
+    Name: ${name}<br>
+    Mobile: ${mobile}<br>
+    Address: ${address}<br><br>
+    <b>Items:</b><br>
+    `;
+
+    for (var item in cart) {
+        var subtotal = cart[item].price * cart[item].qty;
+        total += subtotal;
+        bill += item+" x "+cart[item].qty+" = ₹"+subtotal+"<br>";
+    }
+
+    var finalTotal = total + delivery;
+
+    bill += `
+    <br>Delivery: ₹${delivery}
+    <br><h3>Total: ₹${finalTotal}</h3>
+    <hr>
+    <p style="text-align:center;">Thank You ❤️</p>
+    `;
+
+    var box=document.getElementById("billBox");
+    box.innerHTML=bill;
+    box.style.display="block";
+}
+
+function printBill(){
+    var content=document.getElementById("billBox").innerHTML;
+
+    var win=window.open('', '', 'width=400,height=600');
+
+    win.document.write("<html><body>"+content+"</body></html>");
+
+    win.document.close();
+    win.print();
+}  
 </script>
 
 </body>
