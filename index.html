@@ -281,8 +281,12 @@ background:#00e676;
 
 <button onclick="placeOrder()">Place Order (WhatsApp)</button>
 <button class="payBtn" onclick="payUPI()">Pay Now (UPI)</button>
+ <button onclick="generateBill()">Generate Bill</button>
+<button onclick="printBill()">Print Bill</button>   
 </div>
-
+    
+<div id="billBox" style="background:white;color:black;padding:10px;margin-top:10px;display:none;"></div>
+    
 <script>
 var cart = {};
 
