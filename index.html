@@ -432,15 +432,20 @@ if ('serviceWorker' in navigator) {
 }
 
 function printBill(){
-    var content=document.getElementById("billBox").innerHTML;
+    var content = document.getElementById("billBox").innerHTML;
 
-    var win=window.open('', '', 'width=400,height=600');
+    var win = window.open('', '', 'width=300,height=600');
 
-    win.document.write("<html><body>"+content+"</body></html>");
+    win.document.write(`
+    <html>
+    <body onload="window.print()">
+    ${content}
+    </body>
+    </html>
+    `);
 
     win.document.close();
-    win.print();
-}  
+}
 </script>
 
 </body>
